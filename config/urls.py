@@ -21,6 +21,9 @@ from django.urls import path, include
 
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from rest_framework.routers import DefaultRouter
+# from furniture.views import toggle_like, CommentViewSet
+from product.views import ProductViewSet
 
 # Swagger
 schema_view = get_schema_view(
@@ -31,9 +34,12 @@ schema_view = get_schema_view(
     ),
     public=True
 )
+router = DefaultRouter()
+router.register('products', ProductViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', schema_view.with_ui('swagger', cache_timeout=0)),
-    path('api/v1/', include('myaccount.urls'))
+    path('api/v1/', include('myaccount.urls')),
+    path('api/v1/', include(router.urls)),
 ]
