@@ -94,7 +94,7 @@ REST_FRAMEWORK = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
+        'NAME': 'hakaton_db',
         'USER':config('DB_USER'),
         'PASSWORD': config('DB_PASS'),
         'HOST':'127.0.0.1',
