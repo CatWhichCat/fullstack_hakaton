@@ -3,3 +3,7 @@ Pillow
 psycopg2-binary
 python-decouple
 djangorestframework
+drf-yasg
+PyJWT
+djangorestframework-simplejwt
+django-cors-headers
