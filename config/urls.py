@@ -14,8 +14,26 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+
+
+
+
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+# Swagger
+schema_view = get_schema_view(
+    openapi.Info(
+        title='Fullstack_hakaton',
+        default_version='v1',
+        description='My API'
+    ),
+    public=True
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', schema_view.with_ui('swagger', cache_timeout=0)),
+    path('api/v1/', include('myaccount.urls'))
 ]
