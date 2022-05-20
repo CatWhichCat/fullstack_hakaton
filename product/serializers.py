@@ -21,9 +21,6 @@ class ProductSerializer(serializers.ModelSerializer):
         if instance.category:
             representation['category'] = instance.category.name
         representation['likes'] = instance.likes.all().count()
-        return representation
-
-    def to_representation(self, instance):
-        representation =  super().to_representation(instance)
         representation['user'] = instance.user.email
         return representation
+
