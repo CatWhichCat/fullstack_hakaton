@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Product, Comment
+from .models import Product
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -17,18 +17,7 @@ class ProductSerializer(serializers.ModelSerializer):
         if instance.category:
             representation['category'] = instance.category.name
         representation['likes'] = instance.likes.all().count()
-        action = self.context.get('action')
-        if action == 'retrieve':
-            # детализация
-            representation['comments'] = CommentSerializer(instance.comments.all(), many=True).data
-        else:
-            representation['comments'] = instance.comments.all().count()
         return representation
-
-class CommentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Comment
-        fields = '__all__'
 
     def to_representation(self, instance):
         representation =  super().to_representation(instance)
