@@ -20,7 +20,7 @@ def send_conformation_email(user):
     mail.send_mail(
         subject,
         plain_message,
-        "knasyikat@gmail.com",
+        "aidanakurbanbekovahugo@gmail.com",
         [to_emails],
         html_message=msg_html
     )
