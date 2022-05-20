@@ -3,7 +3,7 @@ from django.urls import path, include
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework.routers import DefaultRouter
-from product.views import toggle_like
+from product.views import CategoryViewSet, toggle_like
 from product.views import ProductViewSet
 
 # Swagger
@@ -17,6 +17,7 @@ schema_view = get_schema_view(
 )
 router = DefaultRouter()
 router.register('products', ProductViewSet)
+router.register('category', CategoryViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
