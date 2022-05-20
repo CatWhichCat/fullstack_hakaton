@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-^*_xwhl55#u#6ic&^7ade=^i_=0cxe5ghd)64jj_*4zblim9fo
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['34.125.120.204', ]
+ALLOWED_HOSTS = ['127.0.0.1', ]
 
 
 # Application definition
@@ -87,7 +87,7 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 2,
+    'PAGE_SIZE': 1,
 }
 
 
@@ -100,7 +100,7 @@ DATABASES = {
         'NAME': 'hakaton_db',
         'USER':config('DB_USER'),
         'PASSWORD': config('DB_PASS'),
-        'HOST':'34.125.120.204',
+        'HOST':'127.0.0.1',
         'PORT':5432
 
     }
