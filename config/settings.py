@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-^*_xwhl55#u#6ic&^7ade=^i_=0cxe5ghd)64jj_*4zblim9fo
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['34.125.120.204', ]
 
 
 # Application definition
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'corsheaders', 
     'rest_framework',
     'rest_framework_simplejwt',
+    'corsheaders',
     'drf_yasg',
     'config',
     'myaccount',
@@ -101,7 +102,7 @@ DATABASES = {
         'NAME': 'hakaton_db',
         'USER':config('DB_USER'),
         'PASSWORD': config('DB_PASS'),
-        'HOST':'127.0.0.1',
+        'HOST':'34.125.120.204',
         'PORT':5432
 
     }
@@ -142,18 +143,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
-    "http://127.0.0.1:8000",
-    "http://35.192.116.215"
+    "http://127.0.0.1:3000",
+    
 ]
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
