@@ -27,5 +27,11 @@ class Like(models.Model):
     user = models.ForeignKey(User, related_name='likes', on_delete=models.CASCADE)
     product = models.ForeignKey(Product, related_name='likes', on_delete=models.CASCADE)
 
+class Comment(models.Model):
+    user = models.ForeignKey(User, related_name='comments',on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name='comments', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    text = models.TextField()
+
 
 

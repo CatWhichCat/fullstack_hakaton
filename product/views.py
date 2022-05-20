@@ -3,8 +3,8 @@ from django.db.models import Q
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import status
 from rest_framework.response import Response
-from product.serializers import CategorySerializer, ProductSerializer
-from . models import Product, Like, Category
+from product.serializers import *
+from . models import *
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import api_view, action
 
@@ -39,6 +39,10 @@ class ProductViewSet(ModelViewSet):
         serializer = ProductSerializer(queryset, many=True, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+class CommentViewSet(ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
 @api_view(['GET'])
 @login_required
 def toggle_like(request, id):
@@ -49,5 +53,13 @@ def toggle_like(request, id):
         Like.objects.create(user=request.user, product=product)
     serializer = ProductSerializer(product)
     return Response(serializer.data)
+
+
+# class ProductImageViewSet(ModelViewSet):
+#     queryset = ProductImage.objects.all()
+#     serializer_class = ProductImageSerializer
+
+#     def get_serializer_context(self):
+#         return {'request': self.request}
 
 

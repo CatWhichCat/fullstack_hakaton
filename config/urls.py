@@ -3,9 +3,9 @@ from django.urls import path, include
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework.routers import DefaultRouter
-from product.views import CategoryViewSet, toggle_like
-from product.views import ProductViewSet
-
+from product.views import *
+from django.conf.urls.static import static
+from django.conf import settings
 # Swagger
 schema_view = get_schema_view(
     openapi.Info(
@@ -18,6 +18,7 @@ schema_view = get_schema_view(
 router = DefaultRouter()
 router.register('products', ProductViewSet)
 router.register('category', CategoryViewSet)
+router.register('comment', CommentViewSet,)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,4 +26,4 @@ urlpatterns = [
     path('api/v1/', include('myaccount.urls')),
     path('api/v1/', include(router.urls)),
     path('api/v1/products/<int:id>/toggle_like/', toggle_like),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
