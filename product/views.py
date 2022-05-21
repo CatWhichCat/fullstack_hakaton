@@ -10,7 +10,7 @@ from rest_framework.decorators import api_view, action
 
 
 class MyPaginationClass(PageNumberPagination):
-    page_size = 1
+    page_size = 4
 
     def get_paginated_response(self, data):
         return super().get_paginated_response(data)
@@ -43,7 +43,7 @@ class ProductViewSet(ModelViewSet):
     @action(detail=False, methods=['get'])
     def filter(self, request):
         queryset = self.queryset
-
+        pagination_class=MyPaginationClass
         price = request.query_params.get('price')
         category = request.query_params.get('category')
         made_in = request.query_params.get('made_in')

@@ -30,3 +30,4 @@ urlpatterns = [
     path('api/v1/', include(router.urls)),
     path('api/v1/products/<int:id>/toggle_like/', toggle_like),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
