@@ -3,8 +3,8 @@ from django.db.models import Q
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import status
 from rest_framework.response import Response
-from product.serializers import ProductSerializer
-from . models import Product, Like
+from product.serializers import CategorySerializer, ProductSerializer
+from . models import Product, Like, Category
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import api_view, action
 
@@ -14,6 +14,10 @@ class MyPaginationClass(PageNumberPagination):
 
     def get_paginated_response(self, data):
         return super().get_paginated_response(data)
+
+class CategoryViewSet(ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
 class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
