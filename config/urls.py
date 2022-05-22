@@ -7,7 +7,7 @@ from product.views import toggle_like
 from product.views import *
 from django.conf.urls.static import static
 from django.conf import settings
-from django.conf.urls import patterns
+
 
 
 # Swagger
@@ -30,8 +30,5 @@ urlpatterns = [
     path('api/v1/myaccount/', include('myaccount.urls')),
     path('api/v1/products/<int:id>/toggle_like/', toggle_like)
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-if not settings.DEBUG:
-    urlpatterns += patterns('',
-        (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
-    )
+
 
