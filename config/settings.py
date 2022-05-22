@@ -207,6 +207,3 @@ EMAIL_HOST_USER = 'aidanakurbanbekovahugo@gmail.com'
 EMAIL_HOST_PASSWORD = '07122002dana'
 
 
-# import dj_database_url
-# db_from_env = dj_database_url.config()
-# DATABASES['defult'].update(db_from_env)
