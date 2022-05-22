@@ -4,13 +4,13 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework import status
 from rest_framework.response import Response
 from product.serializers import *
-from . models import *
+from . models import Category, Product, Like
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import api_view, action
 
 
 class MyPaginationClass(PageNumberPagination):
-    page_size = 1
+    page_size = 4
 
     def get_paginated_response(self, data):
         return super().get_paginated_response(data)
@@ -39,9 +39,26 @@ class ProductViewSet(ModelViewSet):
         serializer = ProductSerializer(queryset, many=True, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-class CommentViewSet(ModelViewSet):
-    queryset = Comment.objects.all()
-    serializer_class = CommentSerializer
+
+    @action(detail=False, methods=['get'])
+    def filter(self, request):
+        queryset = self.queryset
+        pagination_class=MyPaginationClass
+        price = request.query_params.get('price')
+        category = request.query_params.get('category')
+        made_in = request.query_params.get('made_in')
+        print(request.query_params)
+        if category:
+            queryset = queryset.filter(category=category)
+        elif made_in:
+            queryset = queryset.filter(made_in=made_in)
+        elif price == 'asc':
+            queryset = self.get_queryset().order_by('price')
+        elif price == 'desc':
+            queryset = self.get_queryset().order_by('-price')
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 @api_view(['GET'])
 @login_required
@@ -53,13 +70,3 @@ def toggle_like(request, id):
         Like.objects.create(user=request.user, product=product)
     serializer = ProductSerializer(product)
     return Response(serializer.data)
-
-
-# class ProductImageViewSet(ModelViewSet):
-#     queryset = ProductImage.objects.all()
-#     serializer_class = ProductImageSerializer
-
-#     def get_serializer_context(self):
-#         return {'request': self.request}
-
-

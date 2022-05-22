@@ -24,7 +24,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class LoginSerializer(TokenObtainPairSerializer):
-     pass
+    pass
 
 
 class ActivationSerializer(serializers.Serializer):
