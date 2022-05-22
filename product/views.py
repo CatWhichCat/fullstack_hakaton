@@ -7,6 +7,8 @@ from product.serializers import *
 from . models import Category, Product, Like
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import api_view, action
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
+from .permisions import *
 
 
 class MyPaginationClass(PageNumberPagination):
@@ -18,6 +20,17 @@ class MyPaginationClass(PageNumberPagination):
 class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+
+
+    def get_permissions(self):
+        """pereopredelim dannyi method"""
+        if self.action in ['update', 'partial_update', 'destroy']:
+            permissions = [IsAdminUser]
+        elif self.action == 'create':
+            permissions = [IsAdminUser, ]
+        else:
+            permissions = [AllowAny, ]
+        return [permission() for permission in permissions]
 
 class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
@@ -38,6 +51,16 @@ class ProductViewSet(ModelViewSet):
                                    Q(made_in__icontains=q))
         serializer = ProductSerializer(queryset, many=True, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def get_permissions(self):
+        """pereopredelim dannyi method"""
+        if self.action in ['update', 'partial_update', 'destroy']:
+            permissions = [IsAdminUser]
+        elif self.action == 'create':
+            permissions = [IsAdminUser, ]
+        else:
+            permissions = [AllowAny, ]
+        return [permission() for permission in permissions]
 
 
     @action(detail=False, methods=['get'])

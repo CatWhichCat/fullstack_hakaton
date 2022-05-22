@@ -16,6 +16,7 @@ from datetime import timedelta
 import os
 
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -97,10 +98,10 @@ REST_FRAMEWORK = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'hakaton_db',
-        'USER':config('DB_USER'),
-        'PASSWORD': config('DB_PASS'),
-        'HOST':'127.0.0.1',
+        'NAME': 'd71vbd63s3km6d',
+        'USER':'jeemzsoasrsxco',
+        'PASSWORD': 'bdb4fdbd42c17631981e6b4e49f4db10833e85d59e7bc085ec995f32834c8c07',
+        'HOST':'ec2-3-231-82-226.compute-1.amazonaws.com',
         'PORT':5432
 
     }
@@ -202,10 +203,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = config('EMAIL_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_PASSWORD')
+EMAIL_HOST_USER = 'aidanakurbanbekovahugo@gmail.com'
+EMAIL_HOST_PASSWORD = '07122002dana'
 
 
-import dj_database_url
-db_from_env = dj_database_url.config()
-DATABASES['defult'].update(db_from_env)
+# import dj_database_url
+# db_from_env = dj_database_url.config()
+# DATABASES['defult'].update(db_from_env)
