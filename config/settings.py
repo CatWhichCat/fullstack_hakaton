@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-^*_xwhl55#u#6ic&^7ade=^i_=0cxe5ghd)64jj_*4zblim9fo
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', ]
+ALLOWED_HOSTS = ['*', ]
 
 
 # Application definition
@@ -204,3 +204,8 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = config('EMAIL_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_PASSWORD')
+
+
+import dj_database_url
+db_from_env = dj_database_url.config()
+DATABASES['defult'].update(db_from_env)
