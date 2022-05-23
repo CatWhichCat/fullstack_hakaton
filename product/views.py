@@ -66,7 +66,6 @@ class ProductViewSet(ModelViewSet):
     @action(detail=False, methods=['get'])
     def filter(self, request):
         queryset = self.queryset
-        pagination_class=MyPaginationClass
         price = request.query_params.get('price')
         category = request.query_params.get('category')
         made_in = request.query_params.get('made_in')
@@ -97,6 +96,17 @@ def toggle_like(request, id):
 class CommentViewSet(ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
+    permission_classes = (IsAuthenticated, IsCommentAuthor, IsAdminUser)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+    def get_permissions(self):
+        """pereopredelim dannyi method"""
+        if self.action == 'destroy':
+            permissions = [IsCommentAuthor, IsAdminUser]
+        elif self.action == 'create':
+            permissions = [IsAuthenticated, ]
+        else:
+            permissions = [AllowAny, ]
+        return [permission() for permission in permissions]
