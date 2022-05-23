@@ -52,6 +52,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -101,7 +102,7 @@ DATABASES = {
         'NAME': 'd71vbd63s3km6d',
         'USER':'jeemzsoasrsxco',
         'PASSWORD': 'bdb4fdbd42c17631981e6b4e49f4db10833e85d59e7bc085ec995f32834c8c07',
-        'HOST':'ec2-3-231-82-226.compute-1.amazonaws.com',
+        'HOST':'ec2-3-231-82-226.compute-1.amazonaws.com', 
         'PORT':5432
 
     }
@@ -144,6 +145,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

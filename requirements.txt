@@ -31,3 +31,4 @@ uritemplate==4.1.1
 urllib3==1.26.9
 whitenoise==6.1.0
 psycopg2==2.9.3
+whitenoise
