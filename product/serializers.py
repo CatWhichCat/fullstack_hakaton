@@ -9,7 +9,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ('id', 'name', 'category', 'price', 'description', 'made_in','image' )
+        fields = '__all__'
 
     def validate_name(self, name):
         if Product.objects.filter(slug=name.lower().replace(' ', '-')).exists():

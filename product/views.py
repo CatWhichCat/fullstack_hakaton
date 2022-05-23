@@ -96,17 +96,17 @@ def toggle_like(request, id):
 class CommentViewSet(ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    permission_classes = (IsAuthenticated, IsCommentAuthor, IsAdminUser)
+    permission_classes = (IsCommentAuthor,)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
-    def get_permissions(self):
-        """pereopredelim dannyi method"""
-        if self.action == 'destroy':
-            permissions = [IsCommentAuthor, IsAdminUser]
-        elif self.action == 'create':
-            permissions = [IsAuthenticated, ]
-        else:
-            permissions = [AllowAny, ]
-        return [permission() for permission in permissions]
+    # def get_permissions(self):
+    #     """pereopredelim dannyi method"""
+    #     if self.action == 'destroy':
+    #         permissions = [IsCommentAuthor or IsAdminUser]
+    #     elif self.action == 'create':
+    #         permissions = [IsAuthenticated, ]
+    #     else:
+    #         permissions = [AllowAny, ]
+    #     return [permission() for permission in permissions]

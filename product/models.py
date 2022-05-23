@@ -16,9 +16,12 @@ class Product(models.Model):
     description = models.TextField()
     made_in = models.CharField(max_length=15)
     image = models.ImageField(upload_to='products_image')
+    created_at = models.DateTimeField(auto_now_add=True)
+
 
     def __str__(self):
         return self.name
+
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         self.slug = self.name.lower().replace(' ', '-')
         return super().save(force_insert, force_update, using, update_fields)
