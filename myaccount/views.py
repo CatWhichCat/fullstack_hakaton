@@ -7,6 +7,9 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .helpers import send_conformation_email
 from .serializers import *
+from rest_framework.generics import GenericAPIView
+from rest_framework.permissions import IsAuthenticated
+
 
 User = get_user_model()
 
@@ -39,3 +42,13 @@ class UserListAPIView(ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = (permissions.IsAuthenticated, )
+
+class LogoutAPIView(GenericAPIView):
+    serializer_class = LogoutSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        serializers = self.serializer_class(data=request.data)
+        serializers.is_valid(raise_exception=True)
+        serializers.save()
+        return Response({'msg': 'You successfully logged out'},status=status.HTTP_204_NO_CONTENT)

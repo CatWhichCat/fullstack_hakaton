@@ -100,13 +100,3 @@ class CommentViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
-
-    # def get_permissions(self):
-    #     """pereopredelim dannyi method"""
-    #     if self.action == 'destroy':
-    #         permissions = [IsCommentAuthor or IsAdminUser]
-    #     elif self.action == 'create':
-    #         permissions = [IsAuthenticated, ]
-    #     else:
-    #         permissions = [AllowAny, ]
-    #     return [permission() for permission in permissions]
