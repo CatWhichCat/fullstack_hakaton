@@ -33,5 +33,8 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     text = models.TextField()
 
+    def __str__(self):
+        return self.product.name
+
 
 
