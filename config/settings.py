@@ -216,4 +216,3 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'aidanakurbanbekovahugo@gmail.com'
 EMAIL_HOST_PASSWORD = '07122002dana'
 
-DISABLE_COLLECTSTATIC = 1
