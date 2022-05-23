@@ -93,3 +93,10 @@ def toggle_like(request, id):
         Like.objects.create(user=request.user, product=product)
     serializer = ProductSerializer(product)
     return Response(serializer.data)
+
+class CommentViewSet(ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)

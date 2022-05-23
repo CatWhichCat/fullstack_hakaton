@@ -22,6 +22,7 @@ schema_view = get_schema_view(
 router = DefaultRouter()
 router.register('products', ProductViewSet)
 router.register('category', CategoryViewSet)
+router.register('comments', CommentViewSet)
 
 urlpatterns = [
     path('', schema_view.with_ui('swagger', cache_timeout=0)),
