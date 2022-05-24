@@ -11,8 +11,6 @@ from rest_framework.generics import GenericAPIView , UpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 from .serializers import ChangePasswordSerializer
 
-User = get_user_model()
-
 class RegisterView(APIView):
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
@@ -31,7 +29,7 @@ class ActivationView(APIView):
         serializer = ActivationSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             code = serializer.validated_data['activation_code']
-            user = get_object_or_404(User, activation_code=code)
+            user = get_object_or_404(get_user_model(), activation_code=code)
             user.is_active = True
             user.activation_code = ''
             user.save()
@@ -39,7 +37,7 @@ class ActivationView(APIView):
 
 
 class UserListAPIView(ListAPIView):
-    queryset = User.objects.all()
+    queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
     permission_classes = (permissions.IsAdminUser, )
 
@@ -59,7 +57,7 @@ class ChangePasswordView(UpdateAPIView):
     An endpoint for changing password.
     """
     serializer_class = ChangePasswordSerializer
-    model = User
+    model = get_user_model()
     permission_classes = (IsAuthenticated,)
 
     def get_object(self, queryset=None):

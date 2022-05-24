@@ -3,8 +3,6 @@ from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.tokens import RefreshToken , TokenError
 
-User = get_user_model()
-
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(min_length=6,
                                      required=True,
@@ -34,7 +32,7 @@ class ActivationSerializer(serializers.Serializer):
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
+        model = get_user_model()
         fields = '__all__'
 
 class LogoutSerializer(serializers.Serializer):
@@ -56,7 +54,7 @@ class LogoutSerializer(serializers.Serializer):
 
 
 class ChangePasswordSerializer(serializers.Serializer):
-    model = User
+    model = get_user_model()
 
     """
     Serializer for password change endpoint.
