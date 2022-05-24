@@ -12,7 +12,7 @@ from .permisions import *
 
 
 class MyPaginationClass(PageNumberPagination):
-    page_size = 4
+    page_size = 6
 
     def get_paginated_response(self, data):
         return super().get_paginated_response(data)
