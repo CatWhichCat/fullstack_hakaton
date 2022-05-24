@@ -4,12 +4,12 @@ from .models import *
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = '__all__'
+        exclude = ('slug', )
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = '__all__'
+        exclude = ('slug', )
 
     def validate_name(self, name):
         if Product.objects.filter(slug=name.lower().replace(' ', '-')).exists():
