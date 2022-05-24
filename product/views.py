@@ -7,8 +7,9 @@ from product.serializers import *
 from . models import Category, Product, Like
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import api_view, action
-from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
+from rest_framework.permissions import AllowAny,  IsAdminUser
 from .permisions import *
+from django.http import HttpResponse
 
 
 class MyPaginationClass(PageNumberPagination):
@@ -100,3 +101,19 @@ class CommentViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+
+def write_db(request):
+    import csv
+    import os
+    open('db.csv', 'w').close()
+    products = Product.objects.all()
+    with open('db.csv', 'w') as f:
+        writer = csv.writer(f, delimiter=',')
+        writer.writerow(('category', 'name', 'price', 'description', 'made_in', 'image'))
+        for product in products:
+            writer.writerow((product.category, product.name, product.price, product.description, product.made_in, product.image))
+    with open('db.csv') as f:
+        db = f.read()
+    os.remove('db.csv')
+    return HttpResponse(db, content_type='application/csv')
