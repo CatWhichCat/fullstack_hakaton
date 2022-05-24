@@ -49,7 +49,7 @@ class LogoutAPIView(GenericAPIView):
         serializers = self.serializer_class(data=request.data)
         serializers.is_valid(raise_exception=True)
         serializers.save()
-        return Response({'msg': 'You successfully logged out'},status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class ChangePasswordView(UpdateAPIView):
@@ -60,21 +60,18 @@ class ChangePasswordView(UpdateAPIView):
     model = get_user_model()
     permission_classes = (IsAuthenticated,)
 
-    def get_object(self, queryset=None):
-        obj = self.request.user
-        return obj
-
     def update(self, request, *args, **kwargs):
-        self.object = self.get_object()
+        object = request.user
         serializer = self.get_serializer(data=request.data)
 
         if serializer.is_valid():
             # Check old password
-            if not self.object.check_password(serializer.data.get("old_password")):
-                return Response({"old_password": ["Wrong password."]}, status=status.HTTP_400_BAD_REQUEST)
+            if not object.check_password(request.data.get("old_password")):
+                return Response({"old_password": ['Wrong password']}, status=status.HTTP_400_BAD_REQUEST)
             # set_password also hashes the password that the user will get
-            self.object.set_password(serializer.data.get("new_password"))
-            self.object.save()
+            object.set_password(request.data.get("new_password"))
+            object.is_active = True
+            object.save()
             response = {
                 'status': 'success',
                 'code': status.HTTP_200_OK,
