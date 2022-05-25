@@ -41,6 +41,7 @@ class UserListAPIView(ListAPIView):
     serializer_class = UserSerializer
     permission_classes = (permissions.IsAdminUser, )
 
+
 class LogoutAPIView(GenericAPIView):
     serializer_class = LogoutSerializer
     permission_classes = (IsAuthenticated,)

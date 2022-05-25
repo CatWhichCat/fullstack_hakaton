@@ -1,10 +1,12 @@
 from rest_framework import serializers
 from .models import *
 
+
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         exclude = ('slug', )
+
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
@@ -28,6 +30,7 @@ class ProductSerializer(serializers.ModelSerializer):
         else:
             representation['comments'] = instance.comments.all().count()
         return representation
+
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:

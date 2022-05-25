@@ -4,7 +4,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.tokens import RefreshToken , TokenError
 
 class RegisterSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(min_length=6,
+    password = serializers.CharField(min_length=8,
                                      required=True,
                                      write_only=True    #pri vozvrawenii ne budem ispol'zovat'
                                      )
@@ -61,5 +61,5 @@ class ChangePasswordSerializer(serializers.Serializer):
     """
     old_password = serializers.CharField(required=True)
     new_password = serializers.CharField(required=True,
-                                        min_length=6, 
+                                        min_length=8, 
                                         write_only=True)

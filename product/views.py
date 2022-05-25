@@ -18,6 +18,7 @@ class MyPaginationClass(PageNumberPagination):
     def get_paginated_response(self, data):
         return super().get_paginated_response(data)
 
+
 class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
@@ -32,6 +33,7 @@ class CategoryViewSet(ModelViewSet):
         else:
             permissions = [AllowAny, ]
         return [permission() for permission in permissions]
+
 
 class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
@@ -93,6 +95,7 @@ def toggle_like(request, id):
         Like.objects.create(user=request.user, product=product)
     serializer = ProductSerializer(product)
     return Response(serializer.data)
+
 
 class CommentViewSet(ModelViewSet):
     queryset = Comment.objects.all()
