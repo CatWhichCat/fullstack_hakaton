@@ -1,12 +1,10 @@
 import uuid
-
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.dispatch import receiver
 from django.urls import reverse
 from django_rest_passwordreset.signals import reset_password_token_created
 from django.core.mail import send_mail
-
 
 class UserManager(BaseUserManager):
     """Define a model manager for User model with no username field."""
@@ -45,7 +43,6 @@ class UserManager(BaseUserManager):
 
         return self._create_user(email, password, **extra_fields)
 
-
 # Custom User, because we need email to authentication not username
 class User(AbstractUser):
     password = models.CharField(max_length=100)
@@ -74,6 +71,7 @@ class User(AbstractUser):
     def create_activation_code(self):
         code = str(uuid.uuid4())
         self.activation_code = code
+
 
 @receiver(reset_password_token_created)
 def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
