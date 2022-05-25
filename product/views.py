@@ -123,34 +123,3 @@ def write_db(request):
     return HttpResponse(db, content_type='application/csv')
 
 
-# добавление оценки рейтинга в продукт
-@api_view(['POST'])
-@login_required
-def add_rating(request, id_product):
-    product = Product.objects.get(id=id_product)
-    rating = int(request.data.get('rating') or -1)
-    if rating < 0 or rating > 5:
-        response = {
-            'status': 'error',
-            'code': status.HTTP_400_BAD_REQUEST,
-            'message': 'wrong rating value'
-        }
-        st = 400
-        return Response(response, st)
-    # если нет такого продукта, он его создает
-    if not Rating.objects.filter(user=request.user, product=product).exists():
-        Rating.objects.create(user=request.user, product=product, rating=rating)
-        response = {
-            'status': 'success',
-            'code': status.HTTP_200_OK
-        }
-        st = status.HTTP_200_OK
-        # если один и тот же юзер поставил один и тот рейтинг выходит ошибка
-    else:
-        response = {
-            'status': 'badrequest',
-            'code': 418,
-            'message': 'you have already added such a rating to the product'
-        }
-        st = 418
-    return Response(response, status=st)
