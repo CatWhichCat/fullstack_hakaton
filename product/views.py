@@ -132,6 +132,7 @@ def add_rating(request, id_product):
         }
         st = 400
         return Response(response, st)
+    # если нет такого продукта, он его создает
     if not Rating.objects.filter(user=request.user, product=product).exists():
         Rating.objects.create(user=request.user, product=product, rating=rating)
         response = {
@@ -139,6 +140,7 @@ def add_rating(request, id_product):
             'code': status.HTTP_200_OK
         }
         st = status.HTTP_200_OK
+        # если один и тот же юзер поставил один и тот рейтинг выходит ошибка
     else:
         response = {
             'status': 'badrequest',
