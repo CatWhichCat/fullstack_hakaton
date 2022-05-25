@@ -19,7 +19,7 @@ class Product(models.Model):
     made_in = models.CharField(max_length=15)
     image = models.ImageField(upload_to='products_image')
     created_at = models.DateTimeField(auto_now_add=True)
-
+    average_rating = models.DecimalField(max_digits=2, decimal_places=1, default=0)
 
     def __str__(self):
         return self.name
@@ -43,5 +43,10 @@ class Comment(models.Model):
     def __str__(self):
         return self.product.name 
 
+
+class Rating(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    rating = models.DecimalField(max_digits=2, decimal_places=1)
 
 

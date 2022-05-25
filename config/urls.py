@@ -29,6 +29,7 @@ urlpatterns = [
     path('api/v1/myaccount/', include('myaccount.urls')),
     path('api/v1/products/<int:id>/toggle_like/', toggle_like),
     path('api/v1/export/', include('product.urls')),
+    path('api/v1/products/<int:id_product>/rating', add_rating),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
