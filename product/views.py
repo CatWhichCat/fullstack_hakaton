@@ -123,7 +123,27 @@ def write_db(request):
 @login_required
 def add_rating(request, id_product):
     product = Product.objects.get(id=id_product)
-    if not Rating.objects.filter(user=User.objects.first(), product=product).exists():
-        Rating.objects.create(user=User.objects.first(), product=product, rating=request.data.get("rating"))
-        
-    return Response({'message': 'ok'})
+    rating = int(request.data.get('rating') or -1)
+    if rating < 0 or rating > 5:
+        response = {
+            'status': 'error',
+            'code': status.HTTP_400_BAD_REQUEST,
+            'message': 'wrong rating value'
+        }
+        st = 400
+        return Response(response, st)
+    if not Rating.objects.filter(user=request.user, product=product).exists():
+        Rating.objects.create(user=request.user, product=product, rating=rating)
+        response = {
+            'status': 'success',
+            'code': status.HTTP_200_OK
+        }
+        st = status.HTTP_200_OK
+    else:
+        response = {
+            'status': 'badrequest',
+            'code': 418,
+            'message': 'you have already added such a rating to the product'
+        }
+        st = 418
+    return Response(response, status=st)
